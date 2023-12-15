@@ -2,21 +2,21 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const jwtPartner = (req, res, next) => {
-  const jwttoken = req.headers.authorization;
-  console.log(`token------------`,jwttoken);
-  let token = jwttoken.replace(/"/g, ''); 
+  try {
+      const jwttoken = req.headers.authorization;
+  let token = jwttoken.replace(/"/g, '');
   if (token) {
-    try {
       const User = jwt.verify(token, process.env.USER_TOKEN_SECRET);
-      console.log(`user---------`,User)
-      req.UserId=User.id
+      req.UserId = User.id
       next();
-    } catch (err) {
-      res.status(401).json({ message: 'Invalid token' });
-    }
-  } else {
+    } 
+   else {
     res.status(401).json({ message: 'Token missing' });
   }
+  } catch (error) {
+    res.status(500).json({ message: 'Invalid token' });
+  }
+
 };
 
-module.exports=jwtPartner;
+module.exports = jwtPartner;

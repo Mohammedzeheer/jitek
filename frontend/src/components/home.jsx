@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from './Navbar';
 import '../../src/App.css'
 import BackgroundAnimate from './Background/BackgroundAnimate';

@@ -12,16 +12,16 @@ export default function Login() {
       if(usertoken){
           Navigate('/home');  
       }else{
-          Navigate('/')
+          Navigate('/login')
       }
   })
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await Axios.post('login', user,);
+      const response = await Axios.post('login',user);
       localStorage.setItem('user', JSON.stringify(response.data.token));
-      Navigate('/home');
+      Navigate('/home')
     } catch (error) {
       toast.error(error.response.data.message)
     }
@@ -97,7 +97,7 @@ export default function Login() {
               <p className="mt-2 text-xs text-gray-600">
                 Don't have an account?
                 <span
-                  onClick={() => Navigate("/Signup")}
+                  onClick={() => Navigate('/signup')}
                   className="text-sm cursor-pointer ml-1
                              no-underline text-blue-600"> Sign up
                 </span>

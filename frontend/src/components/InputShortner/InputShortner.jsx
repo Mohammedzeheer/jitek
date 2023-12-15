@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import './InputShortner.css'
 import { Axios } from '../../api/axiosInstance';
-
-
+import { toast } from 'react-toastify';
 
 function InputShortner() {
   const [originalURL, setOriginalURL] = useState('');
-  const [shortenedUrl,setShortenedUrl]=useState('')
+  const [shortenedUrl, setShortenedUrl] = useState('')
   const Token = localStorage.getItem('user');
   const headers = { authorization: Token };
 
@@ -15,25 +14,25 @@ function InputShortner() {
     try {
       const response = await Axios.post('shorten', {
         originalUrl: originalURL,
-      });
+    },{headers});
       console.log(response);
 
       setShortenedUrl(response.data.shortUrl);
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log('Error:', error);
     }
   };
 
-     
 
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
       const response = await Axios.get(`/shortCode`, { params: { shortenedUrl } });
       // const response = await Axios.get(`/${shortenedUrl}`);
-      console.log('Response:', response); 
-      console.log('Original URL:', response.data.originalUrl); 
-  
+      console.log('Response:', response);
+      console.log('Original URL:', response.data.originalUrl);
+
       if (response.data.originalUrl) {
         window.location.href = response.data.originalUrl;
       } else {
@@ -43,7 +42,7 @@ function InputShortner() {
       console.log('Error:', error);
     }
   };
-  
+
 
   return (
     <>
@@ -61,7 +60,7 @@ function InputShortner() {
           <button className='hover:bg-orange-500' onClick={handleSubmit}>Shorten</button>
         </div>
       </div>
-     
+
       {shortenedUrl && (
         <div>
           <p className='text-white'>
@@ -69,7 +68,7 @@ function InputShortner() {
           </p>
         </div>
       )}
-     </>
+    </>
   );
 }
 

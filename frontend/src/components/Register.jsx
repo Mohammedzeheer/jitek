@@ -14,6 +14,7 @@ export default function Register() {
     e.preventDefault();
     try {
       const response = await Axios.post('register', user);
+      console.log(`response`,response)
       Navigate('/login');
     } catch (error) {
       toast.error(error.response.data.message)
@@ -141,7 +142,7 @@ export default function Register() {
               <p className="mt-2 text-xs text-gray-600">
                 Have an account?
                 <span
-                  onClick={() => Navigate("/")}
+                  onClick={() => Navigate('/login')}
                   className="text-sm cursor-pointer ml-1
                              no-underline text-blue-600"> Login
                 </span>
